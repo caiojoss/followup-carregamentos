@@ -13,7 +13,7 @@
   --text:#E8EDF2;--muted:#7C8B99;--muted-2:#54626E;
   --red:#E5484D;--yellow:#F5A623;--green:#2BB673;--cyan:#36C5F0;--purple:#A78BFA;
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}html{scrollbar-width:none;-ms-overflow-style:none;}html::-webkit-scrollbar{display:none;}
 html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
 .wrap{max-width:640px;margin:0 auto;padding:16px 14px 96px;}
 
@@ -49,7 +49,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 .slot-tabs{display:flex;gap:8px;margin-bottom:10px;}
 .slot-tab{flex:1;background:var(--panel);border:1px solid var(--border);color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:9px 8px;border-radius:8px;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;}
 .slot-tab .st-slot{font-size:11px;font-weight:700;}
-.slot-tab .st-lider{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted-2);}
+.slot-tab .st-lider{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:var(--muted);}
 .slot-tab .st-hours{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted-2);}
 .slot-tab.active-dia{border-color:var(--yellow);color:var(--yellow);}
 .slot-tab.active-dia .st-lider,.slot-tab.active-dia .st-hours{color:rgba(245,166,35,.6);}
@@ -60,10 +60,48 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 .legacy-tab{flex:1;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);color:rgba(245,166,35,.7);font-family:'JetBrains Mono',monospace;font-size:10px;padding:9px 8px;border-radius:8px;cursor:pointer;text-align:center;}
 .legacy-tab.active{border-color:var(--yellow);color:var(--yellow);background:rgba(245,166,35,.08);}
 
-/* PASS BTN */
-.pass-btn{width:100%;background:none;border:1px dashed var(--border);color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;padding:9px;border-radius:8px;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;}
+/* PASS BTN — bottom, após lista */
+.pass-btn{width:100%;background:none;border:1px dashed var(--border);color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;padding:11px;border-radius:8px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;}
 .pass-btn:hover{border-color:var(--yellow);color:var(--yellow);}
 .pass-btn.hidden{display:none;}
+
+/* CHECKLIST DRAWER (mobile) */
+.cklist-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;justify-content:flex-end;z-index:55;}
+.cklist-bg.open{display:flex;}
+.cklist-panel{background:var(--panel);border-left:1px solid var(--border);width:min(340px,92vw);height:100%;display:flex;flex-direction:column;animation:slideRight .22s ease-out;}
+
+/* DESKTOP SIDEBAR LAYOUT */
+@media (min-width:900px){
+  body{ overflow:hidden; height:100vh; }
+  .page-layout{ display:flex; height:100vh; max-width:1200px; margin:0 auto; }
+  .main-col{ flex:1; overflow-y:auto; padding:16px 20px 96px; min-width:0; scrollbar-width:none; -ms-overflow-style:none; }.main-col::-webkit-scrollbar{ display:none; }
+  .sidebar-col{
+    width:300px;
+    flex-shrink:0;
+    border-left:1px solid var(--border);
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    position:sticky;
+    top:0;
+  }
+  .wrap{ max-width:100%; padding:0; }
+  /* esconde fab no desktop */
+  .fab-check{ display:none !important; }
+  .addbar{ right:300px; } /* não cobrir sidebar */
+  /* sidebar sempre visível no desktop */
+  .cklist-bg{
+    position:static !important;
+    background:none !important;
+    display:flex !important;
+    justify-content:stretch !important;
+    inset:auto !important;
+    z-index:auto !important;
+  }
+  .cklist-panel{ width:100%; height:100vh; border-left:none; animation:none; }
+  .cklist-close{ display:none !important; }
+}
 
 /* LIST */
 .list{display:flex;flex-direction:column;gap:9px;}
@@ -71,7 +109,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 .seq{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:var(--muted-2);text-align:center;}
 .info{overflow:hidden;}
 .irow{display:flex;align-items:center;min-width:0;}
-.name{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:none;background:none;color:var(--text);width:100%;padding:0;font-family:'Inter',sans-serif;}
+.name{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:none;background:transparent!important;color:#E8EDF2!important;-webkit-text-fill-color:#E8EDF2!important;opacity:1!important;width:100%;padding:0;font-family:'Inter',sans-serif;-webkit-appearance:none;appearance:none;}.name:-webkit-autofill,.name:-webkit-autofill:hover,.name:-webkit-autofill:focus{-webkit-text-fill-color:#E8EDF2!important;-webkit-box-shadow:0 0 0px 1000px #121922 inset!important;transition:background-color 5000s ease-in-out 0s;}
 .name:focus{outline:none;}
 .passed-tag{font-size:9px;color:var(--yellow);margin-left:5px;flex-shrink:0;}
 .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
@@ -169,10 +207,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 .cal-dot{width:4px;height:4px;border-radius:50%;background:var(--green);}
 .cal-dot.hidden{visibility:hidden;}
 
-/* CHECKLIST DRAWER */
-.cklist-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;justify-content:flex-end;z-index:55;}
-.cklist-bg.open{display:flex;}
-.cklist-panel{background:var(--panel);border-left:1px solid var(--border);width:min(340px,92vw);height:100%;display:flex;flex-direction:column;animation:slideRight .22s ease-out;}
+
 @keyframes slideRight{from{transform:translateX(100%);}to{transform:translateX(0);}}
 .cklist-header{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .cklist-header h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.5px;}
@@ -200,6 +235,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 </style>
 </head>
 <body>
+<div class="page-layout">
+<div class="main-col">
 <div class="wrap">
   <div class="topbar">
     <div class="brand">Carregamentos</div>
@@ -227,23 +264,41 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
   <!-- SLOT TABS (dia / noite / histórico) -->
   <div class="slot-tabs" id="slotTabs"></div>
 
-  <!-- PASSAR PENDENTES -->
+  <div class="list" id="list"></div>
+
+  <!-- PASSAR PENDENTES (após lista) -->
   <button class="pass-btn hidden" id="passBtn">⚡ Passar pendentes →</button>
 
-  <div class="list" id="list"></div>
   <div class="legend">
     <span><i class="sq" style="background:var(--red)"></i> não chegou</span>
     <span><i class="sq" style="background:var(--yellow)"></i> aguardando</span>
     <span><i class="sq" style="background:var(--green)"></i> carregado</span>
   </div>
-</div>
+</div><!-- .wrap -->
+</div><!-- .main-col -->
 
-<div class="addbar">
-  <div class="addbar-inner">
-    <input id="newName" placeholder="Nova carga — ex: PREFERIDA 3/4 WASH" autocomplete="off">
-    <button id="addBtn">＋</button>
+<!-- SIDEBAR DESKTOP -->
+<div class="sidebar-col">
+  <div class="cklist-bg" id="cklistBg">
+    <div class="cklist-panel">
+      <div class="cklist-header">
+        <div><h3>📋 Pendências</h3><div class="cklist-sub" id="ckSub"></div></div>
+        <button class="cklist-close" id="ckClose" style="display:none">✕</button>
+      </div>
+      <div class="cklist-body" id="ckBody"></div>
+      <div class="cklist-footer">
+        <div class="cklist-stats" id="ckStats"></div>
+        <div class="cklist-input-row">
+          <input id="ckInput" placeholder="Ex: Faturar NF Preferida…">
+          <button id="ckAddBtn">＋</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</div><!-- .sidebar-col -->
+</div><!-- .page-layout -->
+
+<div class="addbar"><div class="addbar-inner"><input id="newName" placeholder="Nova carga — ex: PREFERIDA 3/4 WASH" autocomplete="off"><button id="addBtn">＋</button></div></div>
 
 <button class="fab-check" id="fabCheck">📋<span class="fab-badge" id="fabBadge" style="display:none"></span></button>
 
@@ -311,23 +366,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
   </div>
 </div>
 
-<!-- CHECKLIST DRAWER -->
-<div class="cklist-bg" id="cklistBg">
-  <div class="cklist-panel">
-    <div class="cklist-header">
-      <div><h3>📋 Pendências</h3><div class="cklist-sub" id="ckSub"></div></div>
-      <button class="cklist-close" id="ckClose">✕</button>
-    </div>
-    <div class="cklist-body" id="ckBody"></div>
-    <div class="cklist-footer">
-      <div class="cklist-stats" id="ckStats"></div>
-      <div class="cklist-input-row">
-        <input id="ckInput" placeholder="Ex: Faturar NF Preferida…">
-        <button id="ckAddBtn">＋</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
 /* ====== FIREBASE ====== */
@@ -513,13 +551,15 @@ function renderSlotTabs(){
   tNoi.onclick=()=>switchSlot('noite');
   row.appendChild(tNoi);
 
-  // Tab HISTÓRICO (sempre visível)
-  const tLeg=document.createElement('button');
-  tLeg.className='legacy-tab'+(slot==='legacy'?' active':'');
-  tLeg.innerHTML=hasLegacy?'📦 Histórico':'📦 Histórico';
-  tLeg.title='Dados anteriores ao sistema de turnos';
-  tLeg.onclick=()=>switchSlot('legacy');
-  row.appendChild(tLeg);
+  // Tab HISTÓRICO (só aparece se tiver dados legados)
+  if(hasLegacy){
+    const tLeg=document.createElement('button');
+    tLeg.className='legacy-tab'+(slot==='legacy'?' active':'');
+    tLeg.textContent='📦 Histórico';
+    tLeg.title='Dados anteriores ao sistema de turnos';
+    tLeg.onclick=()=>switchSlot('legacy');
+    row.appendChild(tLeg);
+  }
 }
 
 function renderPassBtn(){
@@ -751,9 +791,16 @@ const ckInput=document.getElementById('ckInput');
 document.getElementById('ckAddBtn').onclick=submitCk;
 ckInput.onkeydown=(e)=>{ if(e.key==='Enter')submitCk(); };
 function submitCk(){ const v=ckInput.value.trim(); if(!v)return; const id=db.ref().push().key; db.ref(ckPath()+'/'+id).set({text:v,done:false,createdBy:myName||'—',createdAt:firebase.database.ServerValue.TIMESTAMP}).catch(showErr); ckInput.value=''; }
-document.getElementById('fabCheck').onclick=()=>document.getElementById('cklistBg').classList.add('open');
-document.getElementById('ckClose').onclick=()=>document.getElementById('cklistBg').classList.remove('open');
-document.getElementById('cklistBg').onclick=(e)=>{ if(e.target===document.getElementById('cklistBg'))document.getElementById('cklistBg').classList.remove('open'); };
+document.getElementById('fabCheck').onclick=()=>{
+  if(window.innerWidth < 900) document.getElementById('cklistBg').classList.add('open');
+};
+document.getElementById('ckClose').onclick=()=>{
+  if(window.innerWidth < 900) document.getElementById('cklistBg').classList.remove('open');
+};
+document.getElementById('cklistBg').onclick=(e)=>{
+  if(window.innerWidth < 900 && e.target===document.getElementById('cklistBg'))
+    document.getElementById('cklistBg').classList.remove('open');
+};
 
 /* ====== BOOT ====== */
 loadEscala();
